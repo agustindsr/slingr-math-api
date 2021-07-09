@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "tsc && nodemon --config nodemon.json dist/server.js",
+        "start": "node dist/server.js",
         "dev": "concurrently --kill-others \"tsc -w\" \"nodemon --config nodemon.json dist/server.js\"",
         "build": "tsc -p ."
     },
