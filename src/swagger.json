@@ -1,0 +1,136 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Math API",
+        "description": "",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "paths": {
+        "/api/operations": {
+            "get": {
+                "tags": ["Operations"],
+                "summary": "Get the result of one operation",
+                "parameters": [{
+                        "name": "expression",
+                        "in": "query",
+                        "required": true,
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "precision",
+                        "in": "query",
+                        "required": false,
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ],
+
+                "responses": {
+                    "200": {
+                        "description": "Result",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "UnProcessableEntity",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#definitions/errorDetailModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Operations"
+                ],
+                "summary": "Get the result of one operation",
+                "requestBody": {
+                    "description": "Operation Parameter",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#definitions/postOperationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Result",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#definitions/errorDetailModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "definitions": {
+        "postOperationRequest": {
+            "type": "object",
+            "properties": {
+                "expression": {
+                    "type": "string",
+                    "required": true
+                },
+                "precision": {
+                    "type": "integer"
+                }
+            }
+        },
+        "errorDetailModel": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
