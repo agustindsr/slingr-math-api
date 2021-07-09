@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, urlencoded } from 'express';
 import OperationService from '../services/operationsServices';
 
 
@@ -6,7 +6,10 @@ class OperationsController {
 
   getOperation(req: Request, res: Response) {
     try {
-      const { expression, precision } = req.query as { expression: string, precision?: string };
+      let { expression, precision } = req.query as { expression: string, precision?: string };
+      console.log(`expression ${expression}`)
+      console.log(`expression decode ${decodeURIComponent(expression)}`)
+      console.log(`expression encode ${encodeURIComponent(expression)}`)
 
       const result = OperationService.getOperationResult(expression, precision !== undefined ? parseInt(precision) : undefined);
 
