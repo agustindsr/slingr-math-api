@@ -2,12 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mathjs_1 = require("mathjs");
 class OperationService {
-    getOperationResult(expression, precision) {
-        console.log(`expresion: ${expression} precision: ${precision}`);
+    solveOperation(expression, precision) {
         let result = mathjs_1.evaluate(expression);
-        if (precision !== undefined) {
-            result = parseFloat(result.toFixed(precision));
-        }
+        result = precision !== undefined ? parseFloat(result.toFixed(precision)) : result;
         return result;
     }
 }

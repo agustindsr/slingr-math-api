@@ -1,29 +1,30 @@
 import express from 'express';
 import cors from 'cors'
-import loggerRequest from './logRequest';
 import OperationsController from './controllers/operationsController';
-import postOperationDto from './dto/postOperationDto';
-import { validateBody, validateQueryParams } from './middleware/validateRequest';
+import validateRequest from './middleware/validateRequest';
 import apiErrorHandler from './errors/api-error-handler';
-import getOperationDto from './dto/getOperationDto';
+import operationDto from './dto/operationDto';
+import logRequest from './middleware/logRequest';
 
 class Router {
   constructor(server: any) {
-    const router = express.Router()
+    const router = express.Router();
 
     var corsOptions = {
       origin: '*',
     }
 
     server.use(cors(corsOptions));
-    server.use(loggerRequest)
-    server.use(express.urlencoded({ extended: true }));
+    server.use(express.urlencoded({ extended: false }));
     server.use(express.json());
 
-    router.get('/operations', validateQueryParams(getOperationDto), OperationsController.getOperation)
-    router.post('/operations', validateBody(postOperationDto), OperationsController.postOperation)
+    server.use(logRequest)
+
+    router.get('/operations', validateRequest(operationDto, "QueryParams"), OperationsController.solveOperation)
+    router.post('/operations', validateRequest(operationDto, "Body"), OperationsController.solveOperation)
 
     server.use('/api', router)
+
     server.use(apiErrorHandler)
   }
 }

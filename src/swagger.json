@@ -5,15 +5,15 @@
         "title": "Math API",
         "description": "",
         "license": {
-            "name": "MIT",
-            "url": "https://opensource.org/licenses/MIT"
+            "name": "SLINGR",
+            "url": "https://www.slingr.io/"
         }
     },
     "paths": {
         "/api/operations": {
             "get": {
                 "tags": ["Operations"],
-                "summary": "Get the result of one operation",
+                "summary": "Solve a mathematical operation ",
                 "parameters": [{
                         "name": "expression",
                         "in": "query",
@@ -21,7 +21,8 @@
                         "content": {
                             "text/plain": {
                                 "schema": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "default": "1.2 * (2 + 4.5)"
                                 }
                             }
                         }
@@ -33,7 +34,8 @@
                         "content": {
                             "text/plain": {
                                 "schema": {
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "default": 2
                                 }
                             }
                         }
@@ -70,7 +72,7 @@
                 "tags": [
                     "Operations"
                 ],
-                "summary": "Get the result of one operation",
+                "summary": "Solve a mathematical operation ",
                 "requestBody": {
                     "description": "Operation Parameter",
                     "required": true,
@@ -117,10 +119,12 @@
             "properties": {
                 "expression": {
                     "type": "string",
-                    "required": true
+                    "required": true,
+                    "default": "1.2 * (2 + 4.5)"
                 },
                 "precision": {
-                    "type": "integer"
+                    "type": "integer",
+                    "default": 2
                 }
             }
         },

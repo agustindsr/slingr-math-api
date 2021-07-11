@@ -1,14 +1,11 @@
 import { evaluate } from 'mathjs'
 
 class OperationService {
-  getOperationResult(expression: string, precision?: number): number {
-    console.log(`expresion: ${expression} precision: ${precision}`)
+  solveOperation(expression: string, precision?: number): number {
 
-    let result = evaluate(expression);
+    let result = evaluate(expression) as number;
 
-    if (precision !== undefined) {
-      result = parseFloat(result.toFixed(precision));
-    }
+    result = precision !== undefined ? parseFloat(result.toFixed(precision)) : result;
 
     return result;
   }

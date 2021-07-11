@@ -2,27 +2,17 @@ import ApiError from "../errors/api-error";
 import { Request, Response, NextFunction } from 'express'
 import { ObjectSchema } from "yup";
 
-export function validateBody(schema: ObjectSchema<any>) {
+export default function validateRequest(schema: ObjectSchema<any>, target: "Body" | "QueryParams") {
   return async (req: Request, res: Response, next: NextFunction) => {
+    let targetToValidate = target === "Body" ? req.body : req.query;
     try {
-      const validatedBody = await schema.validate(req.body);
-      req.body = validatedBody;
+      const validatedBody = await schema.validate(targetToValidate);
+      targetToValidate = validatedBody;
       next();
     } catch (err) {
       next(ApiError.badRequest(err));
     }
   };
-}
-
-export function validateQueryParams(schema: ObjectSchema<any>) {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const validatedQueryParams = await schema.validate(req.query);
-      req.query = validatedQueryParams;
-      next();
-    } catch (err) {
-      next(ApiError.badRequest(err));
-    }
-  }
 };
+
 
